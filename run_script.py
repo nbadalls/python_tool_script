@@ -18,12 +18,12 @@ def run_script():
 def createlist():
       
      
-      input_path = "/home/hjg/Data/SDB_Disk/Data/Train_Data/O2N/Data_sdd/Patches_mtcnn/MultiPatches/fc_0.35_112x96/Data_sdc"
-      dst_path = "/home/hjg/Data/SDB_Disk/Data/Train_Data/O2N/Data_sdd/Patches_mtcnn/MultiPatches_list/single_folder_list"
+      input_path = "/home/minivision/Data/FakeFace/Train_mtcnn_patches/fc_0.35_112x96"
+      dst_path = "/home/minivision/Data/FakeFace/Train_mtcnn_patches/single_folder_list"
       
           
-      num = 8
-      add_prefix = "Data_sdc"
+      num = 0
+      add_prefix = None
       
       for elem in os.listdir(input_path):
          
@@ -42,10 +42,23 @@ def create_image_pair():
     image_list = "/home/hjg/Data/SDB_Disk/Data/Test_Data/O2N/XCH-small/image_list-mtcnn.txt"
     get_image_pair_list = create_list.CreateList()
     get_image_pair_list.create_pair_list(image_list)
+    
+def create_faceface_label():
+    landmark_path = "/home/minivision/Data/FakeFace/Train_mtcnn_combine_landmark/2018-06-22_combine_FakeFace_landmarks_clean.txt"
+    get_fakeface_label = create_list.CreateList()
+    get_fakeface_label.create_fakeface_label_from_landmark(landmark_path)
+    
+def clean_landmark():
+    landmark_path = "/home/minivision/Data/FakeFace/Train_mtcnn_combine_landmark/2018-06-22_combine_FakeFace_landmarks.txt"
+    get_fakeface_label = create_list.CreateList()
+    get_fakeface_label.clean_unregular_landmark_items(landmark_path, False)
       
 if __name__ == '__main__':
     
-    create_image_pair()
+    
+    #clean_landmark()
+    create_faceface_label()
+    #create_image_pair()
     #create_label()
     #run_script()
     #createlist()
