@@ -59,7 +59,7 @@ def images_select():
     output_path = "/home/hjg/Data/SDB_Disk/Data/Train_Data/O2N/Data_sdd/identification_driver_5W"
     select_image = select_image_files.SelectImages()
     #select_image.select_one_image_from_file(input_path,output_path, 50000 )
-    select_image.select_certain_image_from_file(input_path, output_path, "2.jpg", 50000)
+    select_image = select_certain_image_from_file(input_path, output_path, "2.jpg", 50000)
 
 if __name__ == '__main__':
     images_select()
