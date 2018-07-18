@@ -11,30 +11,32 @@ import select_image_files
 import os
 
 def run_script():
-    input_path = "/home/hjg/Data/SDB_Disk/Data/Train_Data/O2N/Data_sdd/Patches_mtcnn/MultiPatches_list/single_folder_list/AsianLife3W_GE8_list.txt"
-    output_path = input_path.replace('.txt', '_batch1-2.txt')
+    input_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches_list/combine_folder_list/combine_mtcnn_base+add1+2-1_list.txt"
+    output_path = input_path.replace('.txt', '_delAsia-b3.txt')
     select_landmark = text_process.TextProcess(input_path, output_path)
     select_landmark.selected_certain_part_from_landmark_file('batch3', False)
 
 def createlist():
       
-     
-      input_path = "/home/minivision/Data/FakeFace/Train_mtcnn_patches/fc_0.35_112x96"
-      dst_path = "/home/minivision/Data/FakeFace/Train_mtcnn_patches/single_folder_list"
-      
-          
-      num = 0
+      input_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches/fc_0.4_96x96/ZheDa_Faces"
+      dst_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/single_folder_list"
+            
+      num = 8
       add_prefix = None
-      
+
+      #get_list = create_list.CreateList(input_path, dst_path)
+      #get_list.create_condition_image_list(num, add_prefix)
+
+      # add_prefix = None    
       for elem in os.listdir(input_path):
 
-         # if elem.find('Data_sdc') < 0:
-              get_list = create_list.CreateList(input_path + '/' + elem, dst_path)
-              get_list.create_condition_image_list(num, add_prefix)
+          if elem.find('Data_sdc') < 0:
+               get_list = create_list.CreateList(input_path + '/' + elem, dst_path)
+               get_list.create_condition_image_list(num, add_prefix)
 
 def create_label():
 
-    image_list = "/home/hjg/Data/SDB_Disk/Data/Train_Data/O2N/Data_sdd/Patches_mtcnn/MultiPatches_list/combine_folder_list/combine_mtcnn_base+add1-2_GE8_list.txt"
+    image_list = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches_list/combine_folder_list/combine_mtcnn_base+add1+2-1_list_delAsia-b3.txt"
     get_label = create_list.CreateList()
     get_label.create_patch_label_from_list(image_list)
 
@@ -62,9 +64,9 @@ def images_select():
     select_image.select_certain_image_from_file(input_path, output_path, "2.jpg", 50000)
 
 if __name__ == '__main__':
-    images_select()
+    # images_select()
     #create_faceface_label()
    # create_image_pair()
-    #create_label()
-    #run_script()
-    #createlist()
+    create_label()
+    # run_script()
+    # createlist()
