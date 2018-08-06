@@ -11,32 +11,35 @@ import select_image_files
 import os
 
 def run_script():
-    input_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches_list/combine_folder_list/combine_mtcnn_base+add1+2-1_list.txt"
-    output_path = input_path.replace('.txt', '_delAsia-b3.txt')
+    input_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches_list/single_folder_combine_add_list/AsianLife3W_GE15_list.txt"
+    output_path = input_path.replace('.txt', '-batch3.txt')
     select_landmark = text_process.TextProcess(input_path, output_path)
     select_landmark.selected_certain_part_from_landmark_file('batch3', False)
 
 def createlist():
       
-      input_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches/fc_0.4_96x96/ZheDa_Faces"
-      dst_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/single_folder_list"
+      input_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches/fc_0.35_112x96/Data_sdc/IDLife-capture-30k"
+      dst_path = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches_list/single_folder_combine_add_list"
             
-      num = 8
-      add_prefix = None
+      num = 15
+      add_prefix = "Data_sdc"
+      # create_list1 = ['2018-03-28_O2O_6000', 'ChinaMobile-pick2', 'Indonesia_Lib_Test', 'Migrant_Worker_select', 'Oriental', 'PadCollection2', 'PAKJ_09_09', 'XCH-select-2018']
+      # create_list2 = ['Data_sdc/IDLife-capture-30k', 'Data_sdc/Life_beidi-pad-cap_130', ]
 
-      #get_list = create_list.CreateList(input_path, dst_path)
-      #get_list.create_condition_image_list(num, add_prefix)
+      get_list = create_list.CreateList(input_path, dst_path)
+      get_list.create_condition_image_list(num, add_prefix)
 
       # add_prefix = None    
-      for elem in os.listdir(input_path):
+      # for elem in create_list2:
 
-          if elem.find('Data_sdc') < 0:
-               get_list = create_list.CreateList(input_path + '/' + elem, dst_path)
-               get_list.create_condition_image_list(num, add_prefix)
+      # for  elem in os.listdir(input_path):
+      #         # if elem.find('Data_sdc') < 0:
+      #                 get_list = create_list.CreateList(input_path + '/' + elem, dst_path)
+      #                 get_list.create_condition_image_list(num, add_prefix)
 
 def create_label():
 
-    image_list = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches_list/combine_folder_list/combine_mtcnn_base+add1+2-1_list_delAsia-b3.txt"
+    image_list = "/mnt/glusterfs/o2n/FaceRecognition/Train_Data/O2N_Patches/Patches_mtcnn/MultiPatches_list/combine_folder_combine_add_list/combine_add_base-shot+Asia-b3+beid+cap+mul+Chinap2+Pad2+Padb3+XCH_GE15_list.txt"
     get_label = create_list.CreateList()
     get_label.create_patch_label_from_list(image_list)
 
@@ -63,10 +66,35 @@ def images_select():
     #select_image.select_one_image_from_file(input_path,output_path, 50000 )
     select_image.select_certain_image_from_file(input_path, output_path, "2.jpg", 50000)
 
+def combine_add_landmarks():
+    input_path = "/mnt/glusterfs/o2n/FaceRecognition/TrainData_landmarks/single_mtcnn_landmark"
+    add_landmark_path = "/mnt/glusterfs/o2n/FaceRecognition/TrainData_landmarks/single_mtcnn_landmark_add_detect"
+    output_path = "/mnt/glusterfs/o2n/FaceRecognition/TrainData_landmarks/single_mtcnn_landmark_combine_detect"
+
+    combine_landmark = text_process.TextProcess(input_path, output_path)
+    combine_landmark.combine_landmarks_sort(add_landmark_path)
+    
+def select_face_recognition_result():
+    input_path = "/home/zkx/Project/O2N/train_models/create_clean_list/Result/result_face_recognition_predict_2018-07-20_AMImageMtcnn-b0.35s30_fc_0.35_112x96_b+add1+Chinap2+XCH18-delAsia-b3_MobileFaceNet-bn_zkx_iter_170000.txt"
+    possibilty = 0.0
+    select_landmark = text_process.TextProcess(input_path)    
+    select_landmark.select_face_recognition_result(possibilty)
+    
+    
+def clean_list_certain_class_number_label():
+    input_path = "/home/zkx/Project/O2N/train_models/create_clean_list/Result/result_face_recognition_predict_2018-07-20_AMImageMtcnn-b0.35s30_fc_0.35_112x96_b+add1+Chinap2+XCH18-delAsia-b3_MobileFaceNet-bn_zkx_iter_170000_correct_possi0.0_select.txt"
+    create_clean_list = create_list.CreateList(input_path)
+    create_clean_list.clean_list_certain_class_number_label(8)
+    
+    
+    
 if __name__ == '__main__':
     # images_select()
     #create_faceface_label()
    # create_image_pair()
-    create_label()
+     create_label()
     # run_script()
     # createlist()
+    #combine_add_landmarks()
+    # select_face_recognition_result()
+    # clean_list_certain_class_number_label()

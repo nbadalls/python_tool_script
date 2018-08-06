@@ -148,6 +148,37 @@ class CreateList:
             utility.show_process_percentage(index, len(data)-1, 500)
         f.close()
         
+    def clean_list_certain_class_number_label(self, select_num):
+        
+        dst_path = self.input_folder_path.replace('.txt', '_GE_{}_label.txt'.format(select_num))
+        f = open(dst_path, 'w')
+        
+        data = utility.read_file(self.input_folder_path)
+        list_container = []
+        class_num = 0
+        for index, elem in enumerate(data):
+            if len(list_container) == 0:
+                list_container.append(elem.split(' ')[0])
+            else:
+                current_prefix, current_name = utility.get_basename_parent_path(elem.split(' ')[0])
+                last_prefix, last_name = utility.get_basename_parent_path(list_container[-1])
+                #print(current_prefix, last_prefix)
+                
+                if current_prefix == last_prefix:
+                    list_container.append(elem.split(' ')[0])
+                else:
+                    if len(list_container) >= select_num  :
+                        for line in  list_container:
+                            f.write('{} {}\n'.format(line, class_num))
+                        class_num +=1
+                    list_container = []
+                    list_container.append(elem.split(' ')[0])
+                    
+            utility.show_process_percentage(index, len(data)-1, 1000)
+                    
+                         
+                
+        
         
                     
                 
