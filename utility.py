@@ -25,4 +25,4 @@ def show_process_percentage(index, sum_num, display_gap):
         
 def create_dir(folder_path):
     if not os.path.exists(folder_path):
-        os.mkdir(folder_path)
+        os.makedirs(folder_path)
