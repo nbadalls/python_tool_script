@@ -25,7 +25,7 @@ def show_process_percentage(index, sum_num, display_gap):
         
 def create_dir(folder_path):
     if not os.path.exists(folder_path):
-        os.mkdir(folder_path)
+        os.makedirs(folder_path)
         
 def write_into_file(list_elem, file_path):
     print('write into file.{}'.format(file_path))
@@ -40,8 +40,4 @@ def get_basename_parent_path(path):
     basename = path.split('/')[-1]
     parent_path = path.split(basename)[0]
     return parent_path,basename
-    
-    
-    
-        
-    
+
